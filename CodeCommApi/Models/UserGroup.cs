@@ -6,14 +6,14 @@ namespace CodeCommApi.Models
     [PrimaryKey("UserId","GroupId")]
     public class UserGroup
     {
-        [ForeignKey("User")]
+        // [ForeignKey("User")]
         public Guid UserId { get; set; }
         public User User { get; set; }
 
 
-        [ForeignKey("Group")]
+        // [ForeignKey("Group")]
         public Guid GroupId { get; set; }
-        public Group Group { get; set; }
+        public Groups Group { get; set; }
       
     }
 }

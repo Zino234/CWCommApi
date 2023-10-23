@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.12">
       <PrivateAssets>all</PrivateAssets>
@@ -18,6 +20,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="1.1.1" />
+<PackageReference Include="Microsoft.Composition" Version="1.0.30" ExcludeAssets="All" />
+<PackageReference Include="System.Composition" Version="1.0.31" />
   </ItemGroup>
 
 </Project>

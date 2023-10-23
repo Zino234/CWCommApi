@@ -14,6 +14,7 @@ namespace CodeCommApi.Models
         public bool UserIsVerified { get; set; } = false;
         public bool UserAccountIsDisabled { get; set; } = false;
         public DateTime UserCreatedAt { get; set; }
-        public List<UserGroup>? Groups  { get; set; }
+        
+        //public List<UserGroup>? Groups  { get; set; }
     }
 }

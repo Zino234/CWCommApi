@@ -17,7 +17,25 @@ namespace CodeCommApi.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.12");
 
-            modelBuilder.Entity("CodeCommApi.Models.Group", b =>
+            modelBuilder.Entity("CodeCommApi.Models.Chat", b =>
+                {
+                    b.Property<Guid>("UserID1")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("UserID2")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ChatId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("UserID1", "UserID2");
+
+                    b.HasIndex("UserID2");
+
+                    b.ToTable("Chats");
+                });
+
+            modelBuilder.Entity("CodeCommApi.Models.Groups", b =>
                 {
                     b.Property<Guid>("GroupId")
                         .ValueGeneratedOnAdd()
@@ -105,7 +123,26 @@ namespace CodeCommApi.Migrations
                     b.ToTable("UserGroups");
                 });
 
-            modelBuilder.Entity("CodeCommApi.Models.Group", b =>
+            modelBuilder.Entity("CodeCommApi.Models.Chat", b =>
+                {
+                    b.HasOne("CodeCommApi.Models.User", "User1")
+                        .WithMany()
+                        .HasForeignKey("UserID1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CodeCommApi.Models.User", "User2")
+                        .WithMany()
+                        .HasForeignKey("UserID2")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User1");
+
+                    b.Navigation("User2");
+                });
+
+            modelBuilder.Entity("CodeCommApi.Models.Groups", b =>
                 {
                     b.HasOne("CodeCommApi.Models.User", "GroupCreatedBy")
                         .WithMany()
@@ -118,14 +155,14 @@ namespace CodeCommApi.Migrations
 
             modelBuilder.Entity("CodeCommApi.Models.UserGroup", b =>
                 {
-                    b.HasOne("CodeCommApi.Models.Group", "Group")
-                        .WithMany("Users")
+                    b.HasOne("CodeCommApi.Models.Groups", "Group")
+                        .WithMany()
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CodeCommApi.Models.User", "User")
-                        .WithMany("Groups")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -133,16 +170,6 @@ namespace CodeCommApi.Migrations
                     b.Navigation("Group");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("CodeCommApi.Models.Group", b =>
-                {
-                    b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("CodeCommApi.Models.User", b =>
-                {
-                    b.Navigation("Groups");
                 });
 #pragma warning restore 612, 618
         }

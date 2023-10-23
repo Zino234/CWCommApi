@@ -1,5 +1,9 @@
-﻿using CodeCommApi.Data;
+﻿using AutoMapper;
+using CodeCommApi.Data;
+using CodeCommApi.Dependencies;
+using CodeCommApi.Dependencies.Interfaces;
 using CodeCommApi.Dto;
+using CodeCommApi.Dto.Users.Response;
 using CodeCommApi.Models;
 using CodeCommApi.Response;
 using Microsoft.AspNetCore.Http;
@@ -12,39 +16,36 @@ namespace CodeCommApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly CodeCommDbContext _context;
-        public UserController(CodeCommDbContext context)
+        private Helpers<ReadUserDto> x=new ();
+        private IUserService _service;
+        private IMapper _mapper;
+        public UserController(IMapper mapper, IUserService service)
         {
-            _context = context;
+            _service = service;
+            _mapper = mapper;
         }
-
 
         [HttpPost]
         [Route("CreateUser")]
-        public async Task<ActionResult<DefaultResponse<User>>> CreateUser(CreateUserDto dto)
+        public async Task<ActionResult<DefaultResponse<ReadUserDto>>> CreateUser(CreateUserDto dto)
         {
+            var response = new DefaultResponse<ReadUserDto>();
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var response = new DefaultResponse<User>();
+
             try
             {
-                User Use = new User()
+                User user = await _service.CreateUser(dto);
+                if (user == null)
                 {
-                    Username = dto.Username,
-                    UserEmail = dto.Email,
-                    UserPhone = dto.Phone,
-                    UserPassword = dto.ConfirmPassword,
-                    UserProfilePicUrl = dto.ProfilePicUrl
-                };
 
-                await _context.Users.AddAsync(Use);
-                await _context.SaveChangesAsync();
-                response.Status = true;
-                response.ResponseMessage = "User Created";
-                response.ResponseCode = "00";
-                response.Data = Use;
+                    return StatusCode(500, x.ConvertToBad("UNABLE TO CREATE USER"));
+                }
+                var userDto = _mapper.Map<ReadUserDto>(user);
+                response = x.ConvertToGood("USER CREATED SUCCESSFULLY");
+                response.Data = userDto;
                 return Ok(response);
 
 
@@ -52,161 +53,154 @@ namespace CodeCommApi.Controllers
             catch (Exception ex)
             {
 
-                response.Status = false;
-                response.ResponseMessage = $"Unable To  Create User : {ex.Message}";
-                response.ResponseCode = "99";
+                response = x.ConvertToBad(ex.Message);
                 return StatusCode(500, response);
             }
-            return Ok();
         }
+
+
+
+
 
         [HttpGet]
         [Route("GetAllUsers")]
         public async Task<ActionResult<DefaultResponse<List<User>>>> GetAllUsers()
         {
-            var response = new DefaultResponse<List<User>>();
+            var x = new Helpers<List<ReadUserDto>>();
+            var response = new DefaultResponse<List<ReadUserDto>>();
             try
             {
-                var result = await _context.Users.ToListAsync();
 
-                if(result.Count > 0)
+                var result = await _service.GetUsers();
+                if (result == null)
                 {
-                    response.Status = true;
-                    response.ResponseMessage = "Succesful";
-                    response.ResponseCode = "00";
-                    response.Data = result;
-                    return Ok(response);
+                    return NotFound(x.ConvertToBad("NO USER FOUND"));
                 }
-
-            }
-            catch (Exception ex)
-            {
-                response.Status = false;
-                response.ResponseMessage = $" Something Went Wrong : {ex.Message}";
-                response.ResponseCode = "99";
-                
-                return StatusCode(500, response);
-
-            }
-
-            return Ok();
-        }
-
-
-        [HttpGet]
-        [Route("GetUserById/{Id}")]
-        public async Task<ActionResult<DefaultResponse<User>>> GetUserById([FromRoute] Guid Id)
-        {
-            var response = new DefaultResponse<User>();
-
-            try
-            {
-                var result = await _context.Users.FindAsync(Id);
-                if(result == null)
-                {
-                    response.Status = false;
-                    response.ResponseMessage = $"user not found";
-                    response.ResponseCode = "99";
-                   
-                    return NotFound(response);
-
-                }
-                response.Status = true;
-                response.ResponseMessage = "User found";
-                response.ResponseCode = "00";
-                response.Data = result;
+                var users = result.Select(x => _mapper.Map<ReadUserDto>(x));
+                response = x.ConvertToGood("USERS FOUND SUCCESSFULLY");
+                response.Data = users.ToList();
                 return Ok(response);
 
             }
             catch (Exception ex)
             {
-                response.Status = false;
-                response.ResponseMessage = $"Unable To  Get User : {ex.Message}";
-                response.ResponseCode = "99";
-                return StatusCode(500, response);
+
+
+                return StatusCode(500, x.ConvertToBad(ex.Message));
+
+            }
+
+        }
+
+
+        [HttpGet]
+        [Route("GetUserById/{Id}")]
+        public async Task<ActionResult<DefaultResponse<ReadUserDto>>> GetUserById([FromRoute] Guid Id)
+        {
+            var response = new DefaultResponse<ReadUserDto>();
+
+            try
+            {
+                var result =await  _service.FindUser(Id);
+
+                if (result == null)
+                {
+                    response = x.ConvertToBad($"USER WITH ID {Id} : NOT FOUND ");
+
+                    return NotFound(response);
+
+                }
+                var userDto = _mapper.Map<ReadUserDto>(result);
+                response = x.ConvertToGood("USER FOUND");
+                response.Data = userDto;
+                return Ok(response);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, x.ConvertToBad(ex.Message));
 
             }
         }
 
         [HttpDelete]
         [Route("DeleteUser/{Id}")]
-        public async Task<ActionResult<DefaultResponse<User>>> DeleteUser([FromRoute] Guid  Id)
+        public async Task<ActionResult<DefaultResponse<ReadUserDto>>> DeleteUser([FromRoute] Guid Id)
         {
-            var response = new DefaultResponse<User>();
+            var response = new DefaultResponse<ReadUserDto>();
             try
             {
-                var result = await _context.Users.FindAsync(Id);
-                if(result == null)
+                var result = await _service.DeleteUser(Id);
+                if (result == false)
                 {
-                    response.Status = false;
-                    response.ResponseMessage = $"unable to delete user";
-                    response.ResponseCode = "99";
-
-                    //return NotFound(response);
-                    return NoContent();
+                    return StatusCode(500, x.ConvertToBad("UNABLE TO DELETE USER"));
                 }
 
-                _context.Users.Remove(result);
-                _context.Entry(result).State = EntityState.Deleted;
-                await _context.SaveChangesAsync();  
-                response.Status = true;
-                response.ResponseMessage = "User Deleted";
-                response.ResponseCode = "00";
+                return Ok(x.ConvertToGood("USER DELETED"));
+                // return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, x.ConvertToBad($"SOMETHING WENT WRONG : {ex.Message}"));
+            }
+        }
+
+
+
+        [HttpGet("GetAllUserGroups/{Id}")]
+        public async Task<ActionResult<DefaultResponse<List<Groups>>>> GetAllUserGroups([FromRoute] Guid Id)
+        {
+            var x = new Helpers<List<Groups>>();
+            var response = new DefaultResponse<List<Groups>>();
+            try
+            {
+                var result = await _service.GetUserGroups(Id);
+                if (result == null)
+                {
+                    return StatusCode(404, x.ConvertToBad("USER GROUPS NOT FOUND"));
+                }
+                response = x.ConvertToGood("USER GROUPS FOUND");
                 response.Data = result;
                 return Ok(response);
             }
             catch (Exception ex)
             {
 
-                response.Status = false;
-                response.ResponseMessage = $"Something went wrong : {ex.Message}";
-                response.ResponseCode = "99";
-                return StatusCode(500, response);
+                return StatusCode(500, x.ConvertToBad(ex.Message));
             }
+
         }
+
+
 
 
         [HttpPut]
         [Route("UpdateUser/{Id}")]
-        public async Task<ActionResult<DefaultResponse<User>>> UpdateUser([FromRoute] Guid Id, [FromBody] UpdateUserDto dto)
+        public async Task<ActionResult<DefaultResponse<ReadUserDto>>> UpdateUser([FromRoute] Guid Id, [FromBody] UpdateUserDto dto)
         {
-            var response = new DefaultResponse<User>();
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+            var response = new DefaultResponse<ReadUserDto>();
             try
             {
-                var result = await _context.Users.FindAsync(Id);
+                var result=await _service.UpdateUser(Id,dto);
                 if (result == null)
-                {
-                    response.Status = false;
-                    response.ResponseMessage = $"User Not Found";
-                    response.ResponseCode = "99";
-                    return NotFound();
-
-                }
-
-                result.Username = dto.Username;
-                result.UserPhone = dto.Phone;
-                result.UserEmail = dto.Email;
-                result.UserProfilePicUrl = dto.ProfilePicUrl;
-                result.UserPassword = dto.ConfirmPassword;
-
-                _context.Entry(result).State= EntityState.Modified;
-                response.Status = true;
-                response.ResponseMessage = "Updated Successfully";
-                response.ResponseCode = "00";
-                response.Data = result;
-                await _context.SaveChangesAsync();
+                {                  
+                      return StatusCode(400,x.ConvertToBad("SOMETHING WENT WRONG,\n COULD NOT COMPLETE THE UPDATE"));
+                    }
+                var userDto=_mapper.Map<ReadUserDto>(result);
+                response=x.ConvertToGood("USER UPDATED SUCCESSFULLY");
+                response.Data=userDto;
                 return Ok(response);
 
             }
             catch (DbUpdateConcurrencyException)
             {
-                bool Check = _context.Users.Any(x => x.UserId == Id);
+                bool Check=_service.FindAny(Id);
                 if (!Check)
                 {
-                    response.Status = false;
-                    response.ResponseMessage = $"User Not Found";
-                    response.ResponseCode = "99";
-                    return NotFound();
+                    return NotFound(x.ConvertToBad("USER NOT FOUND"));
 
                 }
                 else
