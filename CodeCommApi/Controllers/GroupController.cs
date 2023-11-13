@@ -21,12 +21,42 @@ namespace CodeCommApi.Controllers
         private readonly IMapper _mapper;
         private Helpers<ReadGroupDto> x=new Helpers<ReadGroupDto>();
         private readonly IGroupService _service;
+        private readonly IUserService _user;
 
-        public GroupController(IMapper mapper,IGroupService service)
+        public GroupController(IMapper mapper,IGroupService service,IUserService user)
        {
             _mapper = mapper;
             _service = service;
+            _user=user;
         }
+
+
+        [HttpGet("GetAllUserGroups/{UserId}")]
+        public async Task<ActionResult<DefaultResponse<List<Groups>>>> GetAllUserGroups([FromRoute] Guid UserId)
+        {
+            var x = new Helpers<List<Groups>>();
+            var response = new DefaultResponse<List<Groups>>();
+            try
+            {
+                var result = await _user.GetUserGroups(UserId);
+                if (result == null)
+                {
+                    return StatusCode(404, x.ConvertToBad("USER GROUPS NOT FOUND"));
+                }
+                response = x.ConvertToGood("USER GROUPS FOUND");
+                response.Data = result;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, x.ConvertToBad(ex.Message));
+            }
+
+        }
+
+
+
 
         [HttpPost]
         [Route("CreateGroup")]

@@ -3,6 +3,7 @@ using System;
 using CodeCommApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -15,22 +16,24 @@ namespace CodeCommApi.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.12");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "7.0.13")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("CodeCommApi.Models.Chat", b =>
                 {
                     b.Property<Guid>("UserID1")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UserID2")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ChatId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("UserID1", "UserID2");
-
-                    b.HasIndex("UserID2");
 
                     b.ToTable("Chats");
                 });
@@ -39,28 +42,28 @@ namespace CodeCommApi.Migrations
                 {
                     b.Property<Guid>("GroupId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("GroupCreatedAt")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("GroupDescription")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("GroupIsDeleted")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<string>("GroupLogo")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GroupName")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("GroupId");
 
@@ -73,37 +76,42 @@ namespace CodeCommApi.Migrations
                 {
                     b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("GroupsGroupId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("UserAccountIsDisabled")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("UserCreatedAt")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("UserEmail")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("UserIsVerified")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<string>("UserPassword")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserPhone")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserProfilePicUrl")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId");
+
+                    b.HasIndex("GroupsGroupId");
 
                     b.ToTable("Users");
                 });
@@ -111,35 +119,14 @@ namespace CodeCommApi.Migrations
             modelBuilder.Entity("CodeCommApi.Models.UserGroup", b =>
                 {
                     b.Property<Guid>("UserId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("GroupId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("UserId", "GroupId");
 
-                    b.HasIndex("GroupId");
-
                     b.ToTable("UserGroups");
-                });
-
-            modelBuilder.Entity("CodeCommApi.Models.Chat", b =>
-                {
-                    b.HasOne("CodeCommApi.Models.User", "User1")
-                        .WithMany()
-                        .HasForeignKey("UserID1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CodeCommApi.Models.User", "User2")
-                        .WithMany()
-                        .HasForeignKey("UserID2")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User1");
-
-                    b.Navigation("User2");
                 });
 
             modelBuilder.Entity("CodeCommApi.Models.Groups", b =>
@@ -153,23 +140,16 @@ namespace CodeCommApi.Migrations
                     b.Navigation("GroupCreatedBy");
                 });
 
-            modelBuilder.Entity("CodeCommApi.Models.UserGroup", b =>
+            modelBuilder.Entity("CodeCommApi.Models.User", b =>
                 {
-                    b.HasOne("CodeCommApi.Models.Groups", "Group")
-                        .WithMany()
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("CodeCommApi.Models.Groups", null)
+                        .WithMany("Users")
+                        .HasForeignKey("GroupsGroupId");
+                });
 
-                    b.HasOne("CodeCommApi.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Group");
-
-                    b.Navigation("User");
+            modelBuilder.Entity("CodeCommApi.Models.Groups", b =>
+                {
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

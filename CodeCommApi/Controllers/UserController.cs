@@ -3,6 +3,7 @@ using CodeCommApi.Data;
 using CodeCommApi.Dependencies;
 using CodeCommApi.Dependencies.Interfaces;
 using CodeCommApi.Dto;
+using CodeCommApi.Dto.Users.Requests;
 using CodeCommApi.Dto.Users.Response;
 using CodeCommApi.Models;
 using CodeCommApi.Response;
@@ -92,6 +93,29 @@ namespace CodeCommApi.Controllers
 
         }
 
+[HttpPost("UserLogin")]
+public async Task<ActionResult<DefaultResponse<ReadUserDto>>> UserLogin([FromBody]UserLoginDto dto){
+        var x=new Helpers<ReadUserDto>();
+        if(!ModelState.IsValid){
+            return BadRequest(ModelState);
+        }
+        try
+        {
+            var user=await _service.UserLogin(dto);
+            if(user==null){
+                return BadRequest(x.ConvertToBad("LOGIN FAILED: BAD CREDENTIALS"));
+            }
+            var userDto=_mapper.Map<ReadUserDto>(user);
+            var response=x.ConvertToGood("LOGIN SUCCESSFULL");
+            response.Data=userDto;
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            
+           return StatusCode(500,x.ConvertToBad($"LOGIN FAILED: {ex.Message}"));
+        }
+}
 
         [HttpGet]
         [Route("GetUserById/{Id}")]
@@ -147,29 +171,29 @@ namespace CodeCommApi.Controllers
 
 
 
-        [HttpGet("GetAllUserGroups/{Id}")]
-        public async Task<ActionResult<DefaultResponse<List<Groups>>>> GetAllUserGroups([FromRoute] Guid Id)
-        {
-            var x = new Helpers<List<Groups>>();
-            var response = new DefaultResponse<List<Groups>>();
-            try
-            {
-                var result = await _service.GetUserGroups(Id);
-                if (result == null)
-                {
-                    return StatusCode(404, x.ConvertToBad("USER GROUPS NOT FOUND"));
-                }
-                response = x.ConvertToGood("USER GROUPS FOUND");
-                response.Data = result;
-                return Ok(response);
-            }
-            catch (Exception ex)
-            {
+        // [HttpGet("GetAllUserGroups/{Id}")]
+        // public async Task<ActionResult<DefaultResponse<List<Groups>>>> GetAllUserGroups([FromRoute] Guid Id)
+        // {
+        //     var x = new Helpers<List<Groups>>();
+        //     var response = new DefaultResponse<List<Groups>>();
+        //     try
+        //     {
+        //         var result = await _service.GetUserGroups(Id);
+        //         if (result == null)
+        //         {
+        //             return StatusCode(404, x.ConvertToBad("USER GROUPS NOT FOUND"));
+        //         }
+        //         response = x.ConvertToGood("USER GROUPS FOUND");
+        //         response.Data = result;
+        //         return Ok(response);
+        //     }
+        //     catch (Exception ex)
+        //     {
 
-                return StatusCode(500, x.ConvertToBad(ex.Message));
-            }
+        //         return StatusCode(500, x.ConvertToBad(ex.Message));
+        //     }
 
-        }
+        // }
 
 
 

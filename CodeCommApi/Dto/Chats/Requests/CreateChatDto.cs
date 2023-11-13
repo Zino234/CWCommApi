@@ -11,7 +11,7 @@ namespace CodeCommApi.Dto.Chats.Requests
     public class CreateChatDto
     {
 
-        public Guid ChatId { get; set; }
+        //public Guid ChatId { get; set; }
         public Guid UserID1 { get; set; } 
         public Guid UserID2 { get; set; }
 

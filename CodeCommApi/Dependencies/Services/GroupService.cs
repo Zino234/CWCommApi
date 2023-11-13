@@ -35,8 +35,8 @@ namespace CodeCommApi.Dependencies.Services
             {
                 UserId = UserId,
                 GroupId = GroupId,
-                User = user,
-                Group = group
+                // User = user,
+                // Group = group
             };
             try
             {
@@ -61,6 +61,22 @@ namespace CodeCommApi.Dependencies.Services
             await _context.SaveChangesAsync();
             return group;
         }
+
+
+public async Task<bool> UserPresentInGroup(Guid UserId,Guid GroupId){
+    var group=await GetGroupById(GroupId);
+       
+    var user=await _user.FindUser(UserId);
+     if(group==null||user==null)
+        {
+            return false;
+        }
+    var userPresent=await _context.UserGroups.FirstOrDefaultAsync(x=>x.UserId==UserId&&x.GroupId==GroupId);
+    if(userPresent==null){
+        return false;
+    }
+    return true;
+}
 
         public async Task<bool> DeleteGroup(Guid Id)
         {

@@ -14,11 +14,11 @@ namespace CodeCommApi.Dto
         public string? UserProfilePicUrl { get; set; }
 
         [Required]
-        public string User2Password { get; set; }
+        public string UserPassword { get; set; }
 
         [Compare("UserPassword")]
         public string UserConfirmPassword { get; set; }
-
+ public bool UserIsVerified { get; set; }
         public bool UserAccountIsDisabled { get; set; }
     }
 }

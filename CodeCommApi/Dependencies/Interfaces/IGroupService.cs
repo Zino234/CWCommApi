@@ -15,5 +15,6 @@ namespace CodeCommApi.Dependencies.Interfaces
         Task<Groups> UpdateGroup(Guid Id,UpdateGroupDto dto);
         Task<bool> DeleteGroup(Guid Id);
         Task<bool> AddUserToGroup(Guid UserId,Guid GroupId);
+        Task<bool> UserPresentInGroup(Guid UserId,Guid GroupId);
     }
 }

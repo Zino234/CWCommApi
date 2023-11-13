@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CodeCommApi.Dto;
+using CodeCommApi.Dto.Users.Requests;
 using CodeCommApi.Models;
 
 namespace CodeCommApi.Dependencies.Interfaces
@@ -12,6 +13,7 @@ namespace CodeCommApi.Dependencies.Interfaces
         Task<User> CreateUser(CreateUserDto dto);
         Task<List<User>> GetUsers();
         Task<User> FindUser(Guid Id);
+        Task<User> UserLogin(UserLoginDto dto);
         Task<User> GetSingleUserById(Guid Id);
         Task<User> UpdateUser(Guid Id,UpdateUserDto dto);
         Task<List<Groups>> GetUserGroups(Guid Id);
