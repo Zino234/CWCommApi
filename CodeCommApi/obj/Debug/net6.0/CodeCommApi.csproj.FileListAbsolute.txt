@@ -221,3 +221,4 @@ C:\xampp\htdocs\COURSES\.NET\CWCommApi\CodeCommApi\obj\Debug\net6.0\CodeCommApi.
 C:\xampp\htdocs\COURSES\.NET\CWCommApi\CodeCommApi\obj\Debug\net6.0\CodeCommApi.genruntimeconfig.cache
 C:\xampp\htdocs\COURSES\.NET\CWCommApi\CodeCommApi\obj\Debug\net6.0\ref\CodeCommApi.dll
 C:\xampp\htdocs\COURSES\.NET\CWCommApi\CodeCommApi\bin\Debug\net6.0\BCrypt.Net-Next.dll
+C:\xampp\htdocs\COURSES\.NET\CWCommApi\CodeCommApi\obj\Debug\net6.0\CodeCommApi.sourcelink.json

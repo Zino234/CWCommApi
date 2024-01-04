@@ -115,7 +115,7 @@ namespace CodeCommApi.Dependencies.Services
             return result;
         }
 
-        public async Task<User>? UserLogin(UserLoginDto dto)
+        public async Task<User> UserLogin(UserLoginDto dto)
         {
             var user = await _context.Users.FirstOrDefaultAsync(
                 x => (x.UserEmail == dto.UsernameOrEmail || x.Username == dto.UsernameOrEmail)

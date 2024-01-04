@@ -31,19 +31,19 @@ builder.Services.AddScoped<IGroupMessageService, GroupMessageService>();
 
 
 //OFFLINE DATABASE
-// builder.Services.AddDbContext<CodeCommDbContext>(
-//     options => {
-//         options.UseSqlite(builder.Configuration.GetConnectionString("Offline"))
-// }
-// );
+builder.Services.AddDbContext<CodeCommDbContext>(
+    options => {
+        options.UseSqlite(builder.Configuration.GetConnectionString("Offline"));
+}
+);
 
 
 
 //ONLINE DATABASE
-builder.Services.AddDbContext<CodeCommDbContext>(options=>{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Online")
-    );
-});
+// builder.Services.AddDbContext<CodeCommDbContext>(options=>{
+//     options.UseSqlServer(builder.Configuration.GetConnectionString("Online")
+//     );
+// });
 
 var app = builder.Build();
 
@@ -51,15 +51,15 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     
-    builder.Services.AddCors(options =>
-    {
-        options.AddDefaultPolicy(builder =>
-        {
-            builder.AllowAnyOrigin()
-                   .AllowAnyMethod()
-                   .AllowAnyHeader();
-        });
-    });
+    // builder.Services.AddCors(options =>
+    // {
+    //     options.AddDefaultPolicy(builder =>
+    //     {
+    //         builder.AllowAnyOrigin()
+    //                .AllowAnyMethod()
+    //                .AllowAnyHeader();
+    //     });
+    // });
     app.UseSwagger();
     app.UseSwaggerUI();
 }

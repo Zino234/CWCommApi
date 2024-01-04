@@ -71,10 +71,10 @@ namespace CodeCommApi.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Groups> Groups { get; set; }
+        public DbSet<GroupMessage> GroupMessages { get; set; }
+        public DbSet<DirectMessage> DirectMessages { get; set; }
         public DbSet<UserGroup> UserGroups { get; set; }
         public DbSet<Chat> Chats { get; set; }
-        public DbSet<DirectMessage> DirectMessages { get; set; }
-        public DbSet<GroupMessage> GroupMessages { get; set; }
-        public DbSet<GroupMessageStatus> GroupMessageStatuses { get; set; }
+        
     }
 }

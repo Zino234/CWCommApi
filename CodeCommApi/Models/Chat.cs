@@ -14,13 +14,13 @@ namespace CodeCommApi.Models
         public Guid ChatId { get; set; }
 
 
-        // [ForeignKey("User1")]
+        [ForeignKey("User1")]
         public Guid UserID1 { get; set; }
-        // public User User1 { get; set; }
+        public User? User1 { get; set; }
 
 
-        // [ForeignKey("User2")]
+        [ForeignKey("User2")]
         public Guid UserID2 { get; set; }
-        // public User User2 { get; set; }
+        public User? User2 { get; set; }
     }
 }

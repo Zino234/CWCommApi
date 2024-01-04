@@ -17,9 +17,10 @@ namespace CodeCommApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private Helpers<ReadUserDto> x=new ();
+        private Helpers<ReadUserDto> x = new();
         private IUserService _service;
         private IMapper _mapper;
+
         public UserController(IMapper mapper, IUserService service)
         {
             _service = service;
@@ -41,27 +42,19 @@ namespace CodeCommApi.Controllers
                 User user = await _service.CreateUser(dto);
                 if (user == null)
                 {
-
                     return StatusCode(500, x.ConvertToBad("UNABLE TO CREATE USER"));
                 }
                 var userDto = _mapper.Map<ReadUserDto>(user);
                 response = x.ConvertToGood("USER CREATED SUCCESSFULLY");
                 response.Data = userDto;
                 return Ok(response);
-
-
             }
             catch (Exception ex)
             {
-
                 response = x.ConvertToBad(ex.Message);
                 return StatusCode(500, response);
             }
         }
-
-
-
-
 
         [HttpGet]
         [Route("GetAllUsers")]
@@ -71,7 +64,6 @@ namespace CodeCommApi.Controllers
             var response = new DefaultResponse<List<ReadUserDto>>();
             try
             {
-
                 var result = await _service.GetUsers();
                 if (result == null)
                 {
@@ -81,75 +73,121 @@ namespace CodeCommApi.Controllers
                 response = x.ConvertToGood("USERS FOUND SUCCESSFULLY");
                 response.Data = users.ToList();
                 return Ok(response);
-
             }
             catch (Exception ex)
             {
-
-
                 return StatusCode(500, x.ConvertToBad(ex.Message));
-
             }
-
         }
 
-[HttpPost("UserLogin")]
-public async Task<ActionResult<DefaultResponse<ReadUserDto>>> UserLogin([FromBody]UserLoginDto dto){
-        var x=new Helpers<ReadUserDto>();
-        if(!ModelState.IsValid){
-            return BadRequest(ModelState);
-        }
-        try
+        // [HttpPost]
+        // [Route("Login")]
+        // public async Task<ActionResult<DefaultResponse<User>>> Login(
+        //     [FromBody] UserLoginDto userDto
+        // )
+        // {
+        //     User use = new User()
+        //     {
+        //         UserEmail = userDto.Username,
+        //         UserPassword = userDto.UserPassword
+
+        //         //PUT OTHER THINGS THAT YOU NEED FOR LOGINN, JUST CORRECT YOUR OWN ACCORDINGLY
+        //     };
+        //     //DECLARING THE RESPONSE OBJECT DOWN SO ILL USE IT LATER
+        //     DefaultResponse<User> response = new();
+        //     try
+        //     {
+        //         //MAKIING A CALL TO THE SERVICE FOR LOGIN IN APPLICATION,
+        //         var user = await _service.UserLogin(user);
+        //         if (user == null)
+        //         {
+        //             //YOU WILL HAVE YOUR RESPONSE HERE RETURNING A BAD THING
+        //             response.Status = false;
+        //             response.ResponseMessage = "LOGIN FAILED";
+        //             response.ResponseCode = "99";
+        //             return BadRequest(response);
+        //             //IT IS MUCH MORE APPROPRIATE TO RETURN THIS
+        //             // return Unauthorized(response);
+        //         }
+
+        //         //RESPONSE HERE RETURNING A GOOD THING
+        //         response.Status = true;
+        //         response.ResponseMessage = "LOGIN SUCCESSFUL";
+        //         response.ResponseCode = "00";
+        //         response.Data = user;
+        //         return Ok(response);
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         response.Status = false;
+        //         response.ResponseMessage = ex.Message;
+        //         response.ResponseCode = "99";
+        //         return StatusCode(500, response);
+        //     }
+        // }
+
+        [HttpPost("UserLogin")]
+        public async Task<ActionResult<DefaultResponse<ReadUserDto>>> UserLogin(
+            [FromBody] UserLoginDto dto
+        )
         {
-            var user=await _service.UserLogin(dto);
-            if(user==null){
-                return BadRequest(x.ConvertToBad("LOGIN FAILED: BAD CREDENTIALS"));
+            var x = new Helpers<ReadUserDto>();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
             }
-            var userDto=_mapper.Map<ReadUserDto>(user);
-            var response=x.ConvertToGood("LOGIN SUCCESSFULL");
-            response.Data=userDto;
-            return Ok(response);
+            try
+            {
+                var user = await _service.UserLogin(dto);
+                if (user == null)
+                {
+                    return BadRequest(x.ConvertToBad("LOGIN FAILED: BAD CREDENTIALS"));
+                }
+                var userDto = _mapper.Map<ReadUserDto>(user);
+                var response = x.ConvertToGood("LOGIN SUCCESSFULL");
+                response.Data = userDto;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, x.ConvertToBad($"LOGIN FAILED: {ex.Message}"));
+            }
         }
-        catch (Exception ex)
-        {
-            
-           return StatusCode(500,x.ConvertToBad($"LOGIN FAILED: {ex.Message}"));
-        }
-}
 
         [HttpGet]
         [Route("GetUserById/{Id}")]
-        public async Task<ActionResult<DefaultResponse<ReadUserDto>>> GetUserById([FromRoute] Guid Id)
+        public async Task<ActionResult<DefaultResponse<ReadUserDto>>> GetUserById(
+            [FromRoute] Guid Id
+        )
         {
             var response = new DefaultResponse<ReadUserDto>();
 
             try
             {
-                var result =await  _service.FindUser(Id);
+                var result = await _service.FindUser(Id);
 
                 if (result == null)
                 {
                     response = x.ConvertToBad($"USER WITH ID {Id} : NOT FOUND ");
 
                     return NotFound(response);
-
                 }
                 var userDto = _mapper.Map<ReadUserDto>(result);
                 response = x.ConvertToGood("USER FOUND");
                 response.Data = userDto;
                 return Ok(response);
-
             }
             catch (Exception ex)
             {
                 return StatusCode(500, x.ConvertToBad(ex.Message));
-
             }
         }
 
         [HttpDelete]
         [Route("DeleteUser/{Id}")]
-        public async Task<ActionResult<DefaultResponse<ReadUserDto>>> DeleteUser([FromRoute] Guid Id)
+        public async Task<ActionResult<DefaultResponse<ReadUserDto>>> DeleteUser(
+            [FromRoute] Guid Id
+        )
         {
             var response = new DefaultResponse<ReadUserDto>();
             try
@@ -168,8 +206,6 @@ public async Task<ActionResult<DefaultResponse<ReadUserDto>>> UserLogin([FromBod
                 return StatusCode(500, x.ConvertToBad($"SOMETHING WENT WRONG : {ex.Message}"));
             }
         }
-
-
 
         // [HttpGet("GetAllUserGroups/{Id}")]
         // public async Task<ActionResult<DefaultResponse<List<Groups>>>> GetAllUserGroups([FromRoute] Guid Id)
@@ -200,32 +236,37 @@ public async Task<ActionResult<DefaultResponse<ReadUserDto>>> UserLogin([FromBod
 
         [HttpPut]
         [Route("UpdateUser/{Id}")]
-        public async Task<ActionResult<DefaultResponse<ReadUserDto>>> UpdateUser([FromRoute] Guid Id, [FromBody] UpdateUserDto dto)
+        public async Task<ActionResult<DefaultResponse<ReadUserDto>>> UpdateUser(
+            [FromRoute] Guid Id,
+            [FromBody] UpdateUserDto dto
+        )
         {
-            if(!ModelState.IsValid){
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
             var response = new DefaultResponse<ReadUserDto>();
             try
             {
-                var result=await _service.UpdateUser(Id,dto);
+                var result = await _service.UpdateUser(Id, dto);
                 if (result == null)
-                {                  
-                      return StatusCode(400,x.ConvertToBad("SOMETHING WENT WRONG,\n COULD NOT COMPLETE THE UPDATE"));
-                    }
-                var userDto=_mapper.Map<ReadUserDto>(result);
-                response=x.ConvertToGood("USER UPDATED SUCCESSFULLY");
-                response.Data=userDto;
+                {
+                    return StatusCode(
+                        400,
+                        x.ConvertToBad("SOMETHING WENT WRONG,\n COULD NOT COMPLETE THE UPDATE")
+                    );
+                }
+                var userDto = _mapper.Map<ReadUserDto>(result);
+                response = x.ConvertToGood("USER UPDATED SUCCESSFULLY");
+                response.Data = userDto;
                 return Ok(response);
-
             }
             catch (DbUpdateConcurrencyException)
             {
-                bool Check=_service.FindAny(Id);
+                bool Check = _service.FindAny(Id);
                 if (!Check)
                 {
                     return NotFound(x.ConvertToBad("USER NOT FOUND"));
-
                 }
                 else
                 {

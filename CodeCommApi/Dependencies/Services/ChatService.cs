@@ -59,7 +59,7 @@ namespace CodeCommApi.Models.Services
 
         public async Task<Chat> GetChatById(Guid ChatId)
         {
-            var result = await _context.Chats.FirstOrDefaultAsync(x =>x.ChatId==ChatId)!;
+            var result = await _context.Chats.Where(x =>x.ChatId==ChatId).Include(x=>x.User1).Include(x=>x.User2).FirstOrDefaultAsync()!;
             if (result == null)
             {
                 return null;
@@ -101,6 +101,7 @@ private async Task<User> TransformUser(Guid id){
             {
                 return null;
             }
+            //THIS PART IS FOR GETTING THE USER FROM THE DATABASSE IF NEEDED .
             // result.ForEach(async x =>{
             //     x.User1=await  TransformUser(x.UserID1);
             //     x.User2=await TransformUser(x.UserID2);

@@ -9,9 +9,11 @@ namespace CodeCommApi.Dto.Users.Requests
     public class UserLoginDto
     {
         [Required]
-          public string UsernameOrEmail{ get; set; }
+        public string? UsernameOrEmail { get; set; }
 
-[Required]
-             public string UserPassword { get; set; }
+        // public string Username{ get; set; }
+
+        [Required]
+        public string? UserPassword { get; set; }
     }
 }

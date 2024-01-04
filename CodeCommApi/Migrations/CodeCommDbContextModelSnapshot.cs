@@ -3,7 +3,6 @@ using System;
 using CodeCommApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -16,54 +15,146 @@ namespace CodeCommApi.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.13")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.13");
 
             modelBuilder.Entity("CodeCommApi.Models.Chat", b =>
                 {
                     b.Property<Guid>("UserID1")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("UserID2")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("ChatId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("UserID1", "UserID2");
 
+                    b.HasIndex("UserID2");
+
                     b.ToTable("Chats");
+                });
+
+            modelBuilder.Entity("CodeCommApi.Models.DirectMessage", b =>
+                {
+                    b.Property<Guid>("MessageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MessageBody")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("MessageChatId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("MessageIsDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("MessageReceiverId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("MessageSenderId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("MessageSentTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("MessageTimeDelivered")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("MessageTimeSeen")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("MessageType")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("MessageUpdatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("MessageId");
+
+                    b.ToTable("DirectMessages");
+                });
+
+            modelBuilder.Entity("CodeCommApi.Models.GroupMessage", b =>
+                {
+                    b.Property<Guid>("MessageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("EditedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("GroupId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MessageBody")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("MessageIsDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("MessageSentBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("MessageTimeSent")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("MessageType")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("MessageId");
+
+                    b.ToTable("GroupMessages");
+                });
+
+            modelBuilder.Entity("CodeCommApi.Models.GroupMessageStatus", b =>
+                {
+                    b.Property<Guid>("GroupMessageId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DeliveredAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("SeenAt")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("GroupMessageId", "UserId");
+
+                    b.ToTable("GroupMessageStatuses");
                 });
 
             modelBuilder.Entity("CodeCommApi.Models.Groups", b =>
                 {
                     b.Property<Guid>("GroupId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("GroupCreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("GroupDescription")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<bool>("GroupIsDeleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("GroupLogo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("GroupName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("GroupId");
 
@@ -76,38 +167,38 @@ namespace CodeCommApi.Migrations
                 {
                     b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid?>("GroupsGroupId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.Property<bool>("UserAccountIsDisabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("UserCreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("UserEmail")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<bool>("UserIsVerified")
-                        .HasColumnType("bit");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("UserPassword")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("UserPhone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("UserProfilePicUrl")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("UserId");
 
@@ -119,14 +210,33 @@ namespace CodeCommApi.Migrations
             modelBuilder.Entity("CodeCommApi.Models.UserGroup", b =>
                 {
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("GroupId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("UserId", "GroupId");
 
                     b.ToTable("UserGroups");
+                });
+
+            modelBuilder.Entity("CodeCommApi.Models.Chat", b =>
+                {
+                    b.HasOne("CodeCommApi.Models.User", "User1")
+                        .WithMany()
+                        .HasForeignKey("UserID1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CodeCommApi.Models.User", "User2")
+                        .WithMany()
+                        .HasForeignKey("UserID2")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User1");
+
+                    b.Navigation("User2");
                 });
 
             modelBuilder.Entity("CodeCommApi.Models.Groups", b =>
