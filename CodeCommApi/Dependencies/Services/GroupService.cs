@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,10 @@ using CodeCommApi.Data;
 using CodeCommApi.Dependencies.Interfaces;
 using CodeCommApi.Dto;
 using CodeCommApi.Models;
+using CodeCommApi.Models.Hubs;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace CodeCommApi.Dependencies.Services
@@ -16,25 +21,36 @@ namespace CodeCommApi.Dependencies.Services
         private readonly CodeCommDbContext _context;
         private readonly IMapper _mapper;
         private readonly IUserService _user;
+        private readonly ILogger<GroupService> _logger;
 
-        public GroupService(CodeCommDbContext context, IMapper mapper, IUserService user)
+        // private readonly CodeCommGroupHub _cg;
+        private readonly IHubContext<CodeCommGroupHub> _groupHub;
+        private readonly HttpContext _ctx;
+
+        public GroupService(CodeCommDbContext context,IHubContext<CodeCommGroupHub> groupHub, IMapper mapper, IUserService user,ILogger<GroupService> logger)
         {
             _context = context;
+            _groupHub = groupHub;
             _mapper = mapper;
             _user = user;
+            _logger = logger;
         }
+
+        
         public async Task<bool> AddUserToGroup(Guid UserId, Guid GroupId)
         {
             User user = await _user.FindUser(UserId);
             Groups group = await GetGroupById(GroupId);
             if (user == null || group == null)
             {
-                return false;
+                var errorEntity=(user==null)?"USER":"GROUP";
+                throw new NullReferenceException($"AN ERORR OCCURED | INVALID {errorEntity} ID");
             }
             var UserGroup = new UserGroup()
             {
                 UserId = UserId,
                 GroupId = GroupId,
+                //THIS PART IS FOR IF YOU WANT TO GET THE GROUPS AS WELL .
                 // User = user,
                 // Group = group
             };
@@ -52,6 +68,9 @@ namespace CodeCommApi.Dependencies.Services
 
         }
 
+
+
+
         public async Task<Groups> CreateGroup(CreateGroupDto dto)
         {
             User user = await _user.FindUser(dto.UserId);
@@ -64,19 +83,10 @@ namespace CodeCommApi.Dependencies.Services
 
 
 public async Task<bool> UserPresentInGroup(Guid UserId,Guid GroupId){
-    var group=await GetGroupById(GroupId);
-       
-    var user=await _user.FindUser(UserId);
-     if(group==null||user==null)
-        {
-            return false;
-        }
-    var userPresent=await _context.UserGroups.FirstOrDefaultAsync(x=>x.UserId==UserId&&x.GroupId==GroupId);
-    if(userPresent==null){
-        return false;
-    }
-    return true;
+    return await _context.UserGroups.AnyAsync(x=>x.UserId==UserId&&x.GroupId==GroupId);
 }
+
+
 
         public async Task<bool> DeleteGroup(Guid Id)
         {
@@ -101,15 +111,11 @@ public async Task<bool> UserPresentInGroup(Guid UserId,Guid GroupId){
             return null;
         }
 
-        public async Task<Groups> GetGroupById(Guid Id)
-        {
-            Groups group = await _context.Groups.FirstOrDefaultAsync(x => x.GroupId == Id);
-            if (group == null)
-            {
-                return null;
-            }
-            return group;
-        }
+
+
+
+
+
 
         public async Task<Groups> UpdateGroup(Guid Id, UpdateGroupDto dto)
         {
@@ -127,6 +133,113 @@ public async Task<bool> UserPresentInGroup(Guid UserId,Guid GroupId){
             }
             return null;
         }
+
+
+
+        public async Task<Groups> GetGroupById(Guid Id)
+        {
+            Groups group = await _context.Groups.FirstOrDefaultAsync(x => x.GroupId == Id);
+            if (group == null)
+            {
+                return null;
+            }
+            return group;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public async Task<List<UserGroup>> LoadsUserGroups(string connectionId,Guid UserId)
+        {
+
+
+            var result = await _context.UserGroups.Where(x => x.UserId == UserId).Include(x => x.Group).ToListAsync();
+            if (result != null)
+            {
+                result.Select(async x =>
+                {
+                    await AddToGroup(connectionId,x.GroupId);
+                });
+                return result;
+
+            };
+            return null;
+        }
+
+
+
+
+        public async Task<bool> AddToGroup(string connectionId,Guid GroupId){
+           await  _groupHub.Groups.AddToGroupAsync(connectionId,GroupId.ToString());
+           return true;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 }

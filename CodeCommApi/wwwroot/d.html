@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noty Notification Example</title>
+  <!-- Include Noty CSS and JS files from CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+  <!-- Custom styles for Noty notifications -->
+  <style>
+
+  </style>
+</head>
+<body>
+
+<!-- Button to show a dynamic notification -->
+<button onclick="showDynamicNotification()">Show Dynamic Notification</button>
+
+<!-- Script for dynamic notification -->
+<script>
+    showDynamicNotification()
+  // Function to show a dynamic notification
+  function showDynamicNotification() {
+    // Create a new Noty instance with various customization options
+    new Noty({
+      type: 'success', // Set the notification type (info, success, error, warning, etc.)
+      text: 'Dynamic notification!', // Set the notification text
+      layout: 'bottomRight', // Position at the top-right corner (you can change to other layouts)
+      theme: 'sunset', // Use the 'metroui' theme (you can explore other themes)
+      progressBar: true, // Display a progress bar
+      progressBarColor: 'blue', // Set the progress bar color
+      animation: {
+        open: 'animated fadeIn', // Specify the open animation
+        close: 'animated fadeOut', // Specify the close animation
+        speed: 500, // Set the animation speed
+      },
+      timeout: 3000, // Auto-close after 3 seconds
+    }).show(); // Show the notification
+  }
+</script>
+
+</body>
+</html>

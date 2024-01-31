@@ -1,14 +1,18 @@
+using CodeCommApi;
 using CodeCommApi.Data;
 using CodeCommApi.Dependencies.interfaces;
 using CodeCommApi.Dependencies.Interfaces;
 using CodeCommApi.Dependencies.Services;
+using CodeCommApi.Models.Hubs;
 using CodeCommApi.Models.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
+builder.Services.AddHttpClient();
+// Add services to the container.
+builder.Services.AddSignalR();
 builder.Services.AddControllers();
 builder.Services.AddCors(options =>
 {
@@ -45,30 +49,28 @@ builder.Services.AddDbContext<CodeCommDbContext>(
 //     );
 // });
 
+
+
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    
-    // builder.Services.AddCors(options =>
-    // {
-    //     options.AddDefaultPolicy(builder =>
-    //     {
-    //         builder.AllowAnyOrigin()
-    //                .AllowAnyMethod()
-    //                .AllowAnyHeader();
-    //     });
-    // });
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();
-
+app.UseHsts();
 app.UseAuthorization();
-app.UseCors("AllowAll   ");
+app.UseCors("AllowAll");
+app.UseStaticFiles();
+
+//REGISTERING THE HUBS FOR REAL TIME CONNECTION.
+app.MapHub<CodeCommChatHub>("/hub/chatHub");
+app.MapHub<CodeCommGroupHub>("/hub/groupHub");
+app.MapHub<CodecommMessageHub>("/hub/messageHub");
+app.MapHub<CodeCommNotificationHub>("/hub/notificationHub");
+
+
+
+
 app.MapControllers();
 
 app.Run();

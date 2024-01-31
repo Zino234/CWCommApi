@@ -6,6 +6,7 @@ using CodeCommApi.Dto;
 using CodeCommApi.Dto.Users.Requests;
 using CodeCommApi.Dto.Users.Response;
 using CodeCommApi.Models;
+using CodeCommApi.Models.Hubs;
 using CodeCommApi.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,7 @@ namespace CodeCommApi.Controllers
         {
             _service = service;
             _mapper = mapper;
+            
         }
 
         [HttpPost]
@@ -143,6 +145,7 @@ namespace CodeCommApi.Controllers
                 {
                     return BadRequest(x.ConvertToBad("LOGIN FAILED: BAD CREDENTIALS"));
                 }
+                
                 var userDto = _mapper.Map<ReadUserDto>(user);
                 var response = x.ConvertToGood("LOGIN SUCCESSFULL");
                 response.Data = userDto;

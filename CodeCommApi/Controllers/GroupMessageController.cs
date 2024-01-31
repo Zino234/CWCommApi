@@ -10,8 +10,10 @@ using CodeCommApi.Dto;
 using CodeCommApi.Dto.GroupMessage.Request;
 using CodeCommApi.Dto.GroupMessage.Response;
 using CodeCommApi.Dto.Groups.Response;
+using CodeCommApi.Models.Hubs;
 using CodeCommApi.Response;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace CodeCommApi.Controllers
 {
@@ -21,11 +23,13 @@ namespace CodeCommApi.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IGroupMessageService _service;
+        private readonly IHubContext<CodeCommGroupHub> _groupHub;
         private Helpers<ReadGroupMessageDto> x = new();
 
-        public GroupMessageController(IMapper mapper, IGroupMessageService service)
+        public GroupMessageController(IMapper mapper, IGroupMessageService service,IHubContext<CodeCommGroupHub> groupHub)
         {
             _service = service;
+            _groupHub = groupHub;
             _mapper = mapper;
         }
 
@@ -49,6 +53,7 @@ namespace CodeCommApi.Controllers
                 var response = x.ConvertToGood("MESSAGE SENT SUCCESSFULLY");
                 var messageDto = _mapper.Map<ReadGroupMessageDto>(message);
                 response.Data = messageDto;
+                await _groupHub.Clients.Group(dto.GroupId.ToString()).SendAsync("NewGroupMessage",messageDto);
                 return Ok(response);
             }
             catch (Exception ex)

@@ -1,0 +1,53 @@
+{
+  "Files": [
+    {
+      "Id": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\Uploads\\356939217_219156751073424_1314011159786141729_n.jpg",
+      "PackagePath": "staticwebassets\\Uploads\\356939217_219156751073424_1314011159786141729_n.jpg"
+    },
+    {
+      "Id": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\css\\Noty.css",
+      "PackagePath": "staticwebassets\\css\\Noty.css"
+    },
+    {
+      "Id": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\d.html",
+      "PackagePath": "staticwebassets\\d.html"
+    },
+    {
+      "Id": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\js\\Noty\\noty.js",
+      "PackagePath": "staticwebassets\\js\\Noty\\noty.js"
+    },
+    {
+      "Id": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\js\\dej.js",
+      "PackagePath": "staticwebassets\\js\\dej.js"
+    },
+    {
+      "Id": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\js\\signalR\\signalr.js",
+      "PackagePath": "staticwebassets\\js\\signalR\\signalr.js"
+    },
+    {
+      "Id": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\js\\signalR\\signalr.min.js",
+      "PackagePath": "staticwebassets\\js\\signalR\\signalr.min.js"
+    },
+    {
+      "Id": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\pages\\dej.html",
+      "PackagePath": "staticwebassets\\pages\\dej.html"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.CodeCommApi.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.build.CodeCommApi.props",
+      "PackagePath": "build\\CodeCommApi.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildMultiTargeting.CodeCommApi.props",
+      "PackagePath": "buildMultiTargeting\\CodeCommApi.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildTransitive.CodeCommApi.props",
+      "PackagePath": "buildTransitive\\CodeCommApi.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

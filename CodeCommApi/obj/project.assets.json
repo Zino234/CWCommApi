@@ -11912,11 +11912,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\CodeCommApi.csproj",
+      "projectUniqueName": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\CodeCommApi.csproj",
       "projectName": "CodeCommApi",
-      "projectPath": "C:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\CodeCommApi.csproj",
+      "projectPath": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\CodeCommApi.csproj",
       "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-      "outputPath": "C:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\obj\\",
+      "outputPath": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config"

@@ -5,9 +5,11 @@ using CodeCommApi.Dependencies.Interfaces;
 using CodeCommApi.Dto;
 using CodeCommApi.Dto.Groups.Response;
 using CodeCommApi.Models;
+using CodeCommApi.Models.Hubs;
 using CodeCommApi.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 
@@ -22,13 +24,40 @@ namespace CodeCommApi.Controllers
         private Helpers<ReadGroupDto> x=new Helpers<ReadGroupDto>();
         private readonly IGroupService _service;
         private readonly IUserService _user;
+        private readonly IHubContext<CodecommMessageHub> _messageHub;
+        private readonly IHubContext<CodeCommGroupHub> _groupHub;
 
-        public GroupController(IMapper mapper,IGroupService service,IUserService user)
+        public GroupController(IMapper mapper,IGroupService service,IUserService user,IHubContext<CodecommMessageHub>messageHub,IHubContext<CodeCommGroupHub> groupHub)
        {
             _mapper = mapper;
             _service = service;
             _user=user;
+            _messageHub = messageHub;
+            _groupHub = groupHub;
         }
+
+
+
+        [HttpPost("[action]/{connectionId}/{UserId}")]
+        public async Task<ActionResult<List<UserGroup>>> LoadUser([FromRoute] string connectionId, [FromRoute] Guid UserId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var data = await _service.LoadsUserGroups(connectionId, UserId);
+                var response = x.ConvertToGood("USER GROUPS LOADED SUCCESSFULLY");
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, x.ConvertToBad(ex.Message));
+            }
+        }
+
 
 
         [HttpGet("GetAllUserGroups/{UserId}")]
@@ -191,6 +220,15 @@ namespace CodeCommApi.Controllers
           }
         }
 
+      
+
+        // [HttpPost("[action]/{userConnectionId}/{groupId}")]
+        // public async Task<ActionResult> JoinGroup(string userConnectionId,string groupId){
+        //     await _messageHub.Groups.AddToGroupAsync(userConnectionId,groupId);
+        //     return Ok();
+        // }
+
+
         [HttpPost]
         [Route("AddUser/{UserId}/{GroupId}")]
         public async Task<ActionResult<DefaultResponse<ReadGroupDto>>> AddUserToGroup([FromRoute] Guid UserId, [FromRoute] Guid GroupId)
@@ -214,6 +252,7 @@ namespace CodeCommApi.Controllers
                     
                     return StatusCode(400,x.ConvertToBad("UNABLE TO ADD USER  TO GROUP"));
                 }
+                
                 response=x.ConvertToGood("USER ADDED TO GROUP SUCCESSFULLY");
                 var group=await _service.GetGroupById(GroupId);
                 var groupDto=_mapper.Map<ReadGroupDto>(group);
