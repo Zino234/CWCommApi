@@ -32,6 +32,8 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IGroupService, GroupService>();
 builder.Services.AddScoped<IDirectMessageService, DirectMessageService>();
 builder.Services.AddScoped<IGroupMessageService, GroupMessageService>();
+builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<IJobService, JobService>();
 
 
 //OFFLINE DATABASE
@@ -57,9 +59,9 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();
-app.UseHsts();
 app.UseAuthorization();
 app.UseCors("AllowAll");
+app.UseHsts();
 app.UseStaticFiles();
 
 //REGISTERING THE HUBS FOR REAL TIME CONNECTION.

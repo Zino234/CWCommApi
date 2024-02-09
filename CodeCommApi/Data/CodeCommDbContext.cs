@@ -75,6 +75,8 @@ namespace CodeCommApi.Data
         public DbSet<DirectMessage> DirectMessages { get; set; }
         public DbSet<UserGroup> UserGroups { get; set; }
         public DbSet<Chat> Chats { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Job> Jobs { get; set; }
         
     }
 }

@@ -13,14 +13,16 @@ namespace CodeCommApi.Models
     {
         public Guid ChatId { get; set; }
 
-
+        //NAVIGATION PROPERTIES FOR THE USER 1
         [ForeignKey("User1")]
         public Guid UserID1 { get; set; }
         public User? User1 { get; set; }
 
-
+        //NAVIGATION PROPERTIES FOR THE USER 2
         [ForeignKey("User2")]
         public Guid UserID2 { get; set; }
         public User? User2 { get; set; }
     }
+
+    
 }

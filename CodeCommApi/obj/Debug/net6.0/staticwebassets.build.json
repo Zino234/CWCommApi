@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Kn4R3JfxPxRmgsjVUIcM3FkRfjJhyrE0N64HYCR2hTk=",
+  "Hash": "JylvnPvdHh/CGeaI1QFVancMBCvyKcrIbASrD26ffAA=",
   "Source": "CodeCommApi",
   "BasePath": "_content/CodeCommApi",
   "Mode": "Default",
@@ -148,25 +148,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\pages\\dej.html"
-    },
-    {
-      "Identity": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\Uploads\\356939217_219156751073424_1314011159786141729_n.jpg",
-      "SourceId": "CodeCommApi",
-      "SourceType": "Discovered",
-      "ContentRoot": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\",
-      "BasePath": "_content/CodeCommApi",
-      "RelativePath": "Uploads/356939217_219156751073424_1314011159786141729_n.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Uploads\\356939217_219156751073424_1314011159786141729_n.jpg"
     }
   ]
 }

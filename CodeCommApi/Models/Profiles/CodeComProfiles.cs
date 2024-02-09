@@ -11,6 +11,8 @@ using CodeCommApi.Dto.DirectMessages.Response;
 using CodeCommApi.Dto.GroupMessage.Request;
 using CodeCommApi.Dto.GroupMessage.Response;
 using CodeCommApi.Dto.Groups.Response;
+using CodeCommApi.Dto.Post.Request;
+using CodeCommApi.Dto.Post.Response;
 using CodeCommApi.Dto.Users.Response;
 
 namespace CodeCommApi.Models.Profiles
@@ -32,6 +34,9 @@ namespace CodeCommApi.Models.Profiles
         CreateMap<CreateGroupMessageDto,GroupMessage>();
         CreateMap<UpdateGroupMessageDto,GroupMessage>();
         CreateMap<GroupMessage,ReadGroupMessageDto>();
+        CreateMap<CreatePostDto,Post>();
+        CreateMap<UpdatePostDto,Post>();
+        CreateMap<Post,ReadPostDto>();
 
     
         }

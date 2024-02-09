@@ -1,10 +1,6 @@
 {
   "Files": [
     {
-      "Id": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\Uploads\\356939217_219156751073424_1314011159786141729_n.jpg",
-      "PackagePath": "staticwebassets\\Uploads\\356939217_219156751073424_1314011159786141729_n.jpg"
-    },
-    {
       "Id": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\css\\Noty.css",
       "PackagePath": "staticwebassets\\css\\Noty.css"
     },
