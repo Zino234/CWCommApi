@@ -1,31 +1,31 @@
 {
   "Files": [
     {
-      "Id": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\css\\Noty.css",
+      "Id": "C:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\css\\Noty.css",
       "PackagePath": "staticwebassets\\css\\Noty.css"
     },
     {
-      "Id": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\d.html",
+      "Id": "C:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\d.html",
       "PackagePath": "staticwebassets\\d.html"
     },
     {
-      "Id": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\js\\Noty\\noty.js",
+      "Id": "C:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\js\\Noty\\noty.js",
       "PackagePath": "staticwebassets\\js\\Noty\\noty.js"
     },
     {
-      "Id": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\js\\dej.js",
+      "Id": "C:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\js\\dej.js",
       "PackagePath": "staticwebassets\\js\\dej.js"
     },
     {
-      "Id": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\js\\signalR\\signalr.js",
+      "Id": "C:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\js\\signalR\\signalr.js",
       "PackagePath": "staticwebassets\\js\\signalR\\signalr.js"
     },
     {
-      "Id": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\js\\signalR\\signalr.min.js",
+      "Id": "C:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\js\\signalR\\signalr.min.js",
       "PackagePath": "staticwebassets\\js\\signalR\\signalr.min.js"
     },
     {
-      "Id": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\pages\\dej.html",
+      "Id": "C:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\pages\\dej.html",
       "PackagePath": "staticwebassets\\pages\\dej.html"
     },
     {

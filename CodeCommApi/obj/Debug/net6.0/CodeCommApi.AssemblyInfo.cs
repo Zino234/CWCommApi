@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CodeCommApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a98bb062ff6975445b599a7a7d563fb4dff8068a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e2250643f2d551d1423bbc2a6afd4c4054c561c7")]
 [assembly: System.Reflection.AssemblyProductAttribute("CodeCommApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CodeCommApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

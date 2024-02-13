@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "JylvnPvdHh/CGeaI1QFVancMBCvyKcrIbASrD26ffAA=",
+  "Hash": "DlevxTW6mgELwmQHv4+m7J7O0a9F0RvGwKRbF+cwKMY=",
   "Source": "CodeCommApi",
   "BasePath": "_content/CodeCommApi",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "CodeCommApi\\wwwroot",
       "Source": "CodeCommApi",
-      "ContentRoot": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\",
+      "ContentRoot": "C:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\",
       "BasePath": "_content/CodeCommApi",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\css\\Noty.css",
+      "Identity": "C:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\css\\Noty.css",
       "SourceId": "CodeCommApi",
       "SourceType": "Discovered",
-      "ContentRoot": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\",
+      "ContentRoot": "C:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\",
       "BasePath": "_content/CodeCommApi",
       "RelativePath": "css/Noty.css",
       "AssetKind": "All",
@@ -36,10 +36,10 @@
       "OriginalItemSpec": "wwwroot\\css\\Noty.css"
     },
     {
-      "Identity": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\d.html",
+      "Identity": "C:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\d.html",
       "SourceId": "CodeCommApi",
       "SourceType": "Discovered",
-      "ContentRoot": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\",
+      "ContentRoot": "C:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\",
       "BasePath": "_content/CodeCommApi",
       "RelativePath": "d.html",
       "AssetKind": "All",
@@ -55,10 +55,10 @@
       "OriginalItemSpec": "wwwroot\\d.html"
     },
     {
-      "Identity": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\js\\dej.js",
+      "Identity": "C:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\js\\dej.js",
       "SourceId": "CodeCommApi",
       "SourceType": "Discovered",
-      "ContentRoot": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\",
+      "ContentRoot": "C:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\",
       "BasePath": "_content/CodeCommApi",
       "RelativePath": "js/dej.js",
       "AssetKind": "All",
@@ -74,10 +74,10 @@
       "OriginalItemSpec": "wwwroot\\js\\dej.js"
     },
     {
-      "Identity": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\js\\Noty\\noty.js",
+      "Identity": "C:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\js\\Noty\\noty.js",
       "SourceId": "CodeCommApi",
       "SourceType": "Discovered",
-      "ContentRoot": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\",
+      "ContentRoot": "C:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\",
       "BasePath": "_content/CodeCommApi",
       "RelativePath": "js/Noty/noty.js",
       "AssetKind": "All",
@@ -93,10 +93,10 @@
       "OriginalItemSpec": "wwwroot\\js\\Noty\\noty.js"
     },
     {
-      "Identity": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\js\\signalR\\signalr.js",
+      "Identity": "C:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\js\\signalR\\signalr.js",
       "SourceId": "CodeCommApi",
       "SourceType": "Discovered",
-      "ContentRoot": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\",
+      "ContentRoot": "C:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\",
       "BasePath": "_content/CodeCommApi",
       "RelativePath": "js/signalR/signalr.js",
       "AssetKind": "All",
@@ -112,10 +112,10 @@
       "OriginalItemSpec": "wwwroot\\js\\signalR\\signalr.js"
     },
     {
-      "Identity": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\js\\signalR\\signalr.min.js",
+      "Identity": "C:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\js\\signalR\\signalr.min.js",
       "SourceId": "CodeCommApi",
       "SourceType": "Discovered",
-      "ContentRoot": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\",
+      "ContentRoot": "C:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\",
       "BasePath": "_content/CodeCommApi",
       "RelativePath": "js/signalR/signalr.min.js",
       "AssetKind": "All",
@@ -131,10 +131,10 @@
       "OriginalItemSpec": "wwwroot\\js\\signalR\\signalr.min.js"
     },
     {
-      "Identity": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\pages\\dej.html",
+      "Identity": "C:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\pages\\dej.html",
       "SourceId": "CodeCommApi",
       "SourceType": "Discovered",
-      "ContentRoot": "c:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\",
+      "ContentRoot": "C:\\xampp\\htdocs\\COURSES\\.NET\\CWCommApi\\CodeCommApi\\wwwroot\\",
       "BasePath": "_content/CodeCommApi",
       "RelativePath": "pages/dej.html",
       "AssetKind": "All",

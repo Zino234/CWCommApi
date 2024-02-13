@@ -37,19 +37,19 @@ builder.Services.AddScoped<IJobService, JobService>();
 
 
 //OFFLINE DATABASE
-builder.Services.AddDbContext<CodeCommDbContext>(
-    options => {
-        options.UseSqlite(builder.Configuration.GetConnectionString("Offline"));
-}
-);
+// builder.Services.AddDbContext<CodeCommDbContext>(
+//     options => {
+//         options.UseSqlite(builder.Configuration.GetConnectionString("Offline"));
+// }
+// );
 
 
 
 //ONLINE DATABASE
-// builder.Services.AddDbContext<CodeCommDbContext>(options=>{
-//     options.UseSqlServer(builder.Configuration.GetConnectionString("Online")
-//     );
-// });
+builder.Services.AddDbContext<CodeCommDbContext>(options=>{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Online")
+    );
+});
 
 
 
